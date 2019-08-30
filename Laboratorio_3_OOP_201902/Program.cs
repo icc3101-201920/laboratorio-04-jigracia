@@ -8,7 +8,7 @@ namespace Laboratorio_3_OOP_201902
     {
         static void Main(string[] args)
         {
-            /* List<Card> cards = new List<Card>();
+             List<Card> cards = new List<Card>();
              cards.Add(new CombatCard("Goblin", "melee", null, 5, false));
              cards.Add(new SpecialCard("Snow", "weather", "All LongRange attack points to 1"));
              cards.Add(new SpecialCard("General Harris", "captain", "All LongRange attack points to 10"));
@@ -36,9 +36,7 @@ namespace Laboratorio_3_OOP_201902
              Console.WriteLine(board.PlayerCards[0]["captain"][0].Name);
              Console.WriteLine(String.Join(", ", board.GetMeleeAttackPoints()));
              Console.WriteLine(String.Join(", ", board.GetRangeAttackPoints()));
-             Console.WriteLine(board.WeatherCards.Count);*/
-            Game game = new Game();
-            game.ReadCards();
+             Console.WriteLine(board.WeatherCards.Count);
         }
     }
 }
