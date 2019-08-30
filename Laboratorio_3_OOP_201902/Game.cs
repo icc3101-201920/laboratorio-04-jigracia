@@ -12,6 +12,7 @@ namespace Laboratorio_3_OOP_201902
         private Player[] players;
         private Player activePlayer;
         private List<Deck> decks;
+        private List<Card> captains;
         private Board boardGame;
         private bool endGame;
 
@@ -19,6 +20,7 @@ namespace Laboratorio_3_OOP_201902
         public Game()
         {
             this.decks = new List<Deck>();
+            this.captains = new List<Card>();
         }
         
 
@@ -66,6 +68,9 @@ namespace Laboratorio_3_OOP_201902
                 endGame = value;
             }
         }
+
+        public List<Card> Captains { get => captains; set => captains = value; }
+
 
         //Metodos
         public bool CheckIfEndGame()
@@ -124,8 +129,21 @@ namespace Laboratorio_3_OOP_201902
                 {
                     cont++;
                     Decks[cont].Cards = new List<Card>(cards);
+                    cards.Clear();
                 }
                 
+            }
+            reader.Close();
+        }
+
+        public void ReadCaptainCards() {
+            string fileLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + @"\Files\Captains.txt";
+            StreamReader reader = new StreamReader(fileLocation);
+            while (!reader.EndOfStream)
+            {
+                string line = reader.ReadLine();
+                string[] position = line.Split();
+                captains.Add(new SpecialCard(position[1], position[2], position[3]));
             }
             reader.Close();
         }
