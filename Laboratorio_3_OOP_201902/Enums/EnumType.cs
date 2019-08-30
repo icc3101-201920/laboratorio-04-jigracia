@@ -4,7 +4,18 @@ using System.Text;
 
 namespace Laboratorio_3_OOP_201902.Enums
 {
-    class EnumType
+    public enum EnumType
     {
+        None,
+        melee,
+        range,
+        longRange,
+        buff,
+        buffmelee,
+        buffrange,
+        bufflongRange,
+        captain,
+        weather
+
     }
 }

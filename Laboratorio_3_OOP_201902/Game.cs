@@ -1,4 +1,5 @@
 ﻿using Laboratorio_3_OOP_201902.Cards;
+using Laboratorio_3_OOP_201902.Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -120,10 +121,10 @@ namespace Laboratorio_3_OOP_201902
                         {
                             case "CombatCard":
                                 
-                                cards.Add(new CombatCard(position[1], position[2], position[3], int.Parse(position[4]), bool.Parse(position[5])));
+                                cards.Add(new CombatCard(position[1], (EnumType)Enum.Parse(typeof(EnumType), position[2]), position[3], int.Parse(position[4]), bool.Parse(position[5])));
                                 break;
                             case "SpecialCard":
-                                cards.Add(new SpecialCard(position[1], position[2],position[3]));
+                                cards.Add(new SpecialCard(position[1], (EnumType)Enum.Parse(typeof(EnumType), position[2]), position[3]));
                                 break;
                         }
                     }
@@ -146,7 +147,7 @@ namespace Laboratorio_3_OOP_201902
             {
                 string line = reader.ReadLine();
                 string[] position = line.Split(",");
-                captains.Add(new SpecialCard(position[1], position[2], position[3]));
+                captains.Add(new SpecialCard(position[1], (EnumType)Enum.Parse(typeof(EnumType), position[2]), position[3]));
             }
             reader.Close();
         }

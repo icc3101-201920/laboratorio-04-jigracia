@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Laboratorio_3_OOP_201902.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -22,7 +23,7 @@ namespace Laboratorio_3_OOP_201902.Cards
             }
         }
         //Constructor
-        public SpecialCard(string name, string type, string effect)
+        public SpecialCard(string name, EnumType type, string effect)
         {
             Name = name;
             Type = type;

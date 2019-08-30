@@ -1,4 +1,5 @@
 ﻿using Laboratorio_3_OOP_201902.Cards;
+using Laboratorio_3_OOP_201902.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,11 +12,11 @@ namespace Laboratorio_3_OOP_201902
         private const int DEFAULT_NUMBER_OF_PLAYERS = 2;
 
         //Atributos
-        private Dictionary<string, List<Card>>[] playerCards; 
+        private Dictionary<EnumType, List<Card>>[] playerCards; 
         private List<SpecialCard> weatherCards;
 
         //Propiedades
-        public Dictionary<string, List<Card>>[] PlayerCards
+        public Dictionary<EnumType, List<Card>>[] PlayerCards
         {
             get
             {
@@ -34,14 +35,14 @@ namespace Laboratorio_3_OOP_201902
         //Constructor
         public Board()
         {
-            this.playerCards = new Dictionary<string, List<Card>>[DEFAULT_NUMBER_OF_PLAYERS];
-            this.playerCards[0] = new Dictionary<string, List<Card>>();
-            this.playerCards[1] = new Dictionary<string, List<Card>>();
+            this.playerCards = new Dictionary<EnumType, List<Card>>[DEFAULT_NUMBER_OF_PLAYERS];
+            this.playerCards[0] = new Dictionary<EnumType, List<Card>>();
+            this.playerCards[1] = new Dictionary<EnumType, List<Card>>();
             this.weatherCards = new List<SpecialCard>();
         }
 
         //Metodos
-        public void AddCard(Card card, int playerId = -1, string buffType = null)
+        public void AddCard(Card card, EnumType buffType, int playerId = -1)
         {
             //Combat o Special
             if (card.GetType().Name == nameof(CombatCard))
@@ -66,7 +67,7 @@ namespace Laboratorio_3_OOP_201902
             else
             {
                 //Es capitan?
-                if ((playerId == 0 || playerId == 1) && buffType == null)
+                if ((playerId == 0 || playerId == 1))
                 {
                     //Revisar si no se a agregado el capitan
                     if (!playerCards[playerId].ContainsKey(card.Type))
@@ -79,12 +80,12 @@ namespace Laboratorio_3_OOP_201902
                     }   
                 }
                 //Es buffer?
-                else if ((playerId == 0 || playerId == 1) && buffType != null)
+                else if ((playerId == 0 || playerId == 1))
                 {
                     //Revisar si no se a agregado un buffer en la fila primero.
-                    if (!playerCards[playerId].ContainsKey(card.Type + buffType))
+                    if (!playerCards[playerId].ContainsKey(buffType))
                     {
-                        playerCards[playerId].Add(card.Type + buffType, new List<Card>() { card });
+                        playerCards[playerId].Add(buffType, new List<Card>() { card });
                     }
                     else
                     {
@@ -102,17 +103,17 @@ namespace Laboratorio_3_OOP_201902
             //Guardar las cartas de capitan en una variable temporal
             List<Card>[] captainCards = new List<Card>[DEFAULT_NUMBER_OF_PLAYERS] 
             {
-                new List<Card>(playerCards[0]["captain"]),
-                new List<Card>(playerCards[1]["captain"])
+                new List<Card>(playerCards[0][EnumType.captain]),
+                new List<Card>(playerCards[1][EnumType.captain])
             };
             //Destruir todas las cartas
-            this.playerCards = new Dictionary<string, List<Card>>[DEFAULT_NUMBER_OF_PLAYERS];
-            this.playerCards[0] = new Dictionary<string, List<Card>>();
-            this.playerCards[1] = new Dictionary<string, List<Card>>();
+            this.playerCards = new Dictionary<EnumType, List<Card>>[DEFAULT_NUMBER_OF_PLAYERS];
+            this.playerCards[0] = new Dictionary<EnumType, List<Card>>();
+            this.playerCards[1] = new Dictionary<EnumType, List<Card>>();
             this.weatherCards = new List<SpecialCard>();
             //Agregar nuevamente los capitanes
-            AddCard(captainCards[0][0], 0);
-            AddCard(captainCards[1][0], 1);
+            AddCard(captainCards[0][0],EnumType.None, 0);
+            AddCard(captainCards[1][0],EnumType.None, 1);
         }
         public int[] GetMeleeAttackPoints()
         {
@@ -120,9 +121,9 @@ namespace Laboratorio_3_OOP_201902
             int[] totalAttack = new int[] { 0, 0 };
             for (int i=0; i < 2; i++)
             {
-                if (playerCards[i].ContainsKey("melee"))
+                if (playerCards[i].ContainsKey(EnumType.melee))
                 {
-                    foreach (CombatCard card in playerCards[i]["melee"])
+                    foreach (CombatCard card in playerCards[i][EnumType.melee])
                     {
                         totalAttack[i] += card.AttackPoints;
                     }
@@ -137,9 +138,9 @@ namespace Laboratorio_3_OOP_201902
             int[] totalAttack = new int[] { 0, 0 };
             for (int i = 0; i < 2; i++)
             {
-                if (playerCards[i].ContainsKey("range"))
+                if (playerCards[i].ContainsKey(EnumType.range))
                 {
-                    foreach (CombatCard card in playerCards[i]["range"])
+                    foreach (CombatCard card in playerCards[i][EnumType.range])
                     {
                         totalAttack[i] += card.AttackPoints;
                     }
@@ -153,9 +154,9 @@ namespace Laboratorio_3_OOP_201902
             int[] totalAttack = new int[] { 0, 0 };
             for (int i = 0; i < 2; i++)
             {
-                if (playerCards[i].ContainsKey("longRange"))
+                if (playerCards[i].ContainsKey(EnumType.longRange))
                 {
-                    foreach (CombatCard card in playerCards[i]["longRange"])
+                    foreach (CombatCard card in playerCards[i][EnumType.longRange])
                     {
                         totalAttack[i] += card.AttackPoints;
                     }

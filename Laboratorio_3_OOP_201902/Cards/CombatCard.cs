@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Laboratorio_3_OOP_201902.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,8 +12,9 @@ namespace Laboratorio_3_OOP_201902.Cards
         private bool hero;
 
         //Constructor
-        public CombatCard(string name, string type, string effect, int attackPoints, bool hero)
+        public CombatCard(string name, EnumType type, string effect, int attackPoints, bool hero)
         {
+            
             Name = name;
             Type = type;
             Effect = effect;
