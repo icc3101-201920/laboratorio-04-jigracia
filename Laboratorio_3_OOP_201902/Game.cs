@@ -19,7 +19,10 @@ namespace Laboratorio_3_OOP_201902
         //Constructor
         public Game()
         {
-            this.decks = new List<Deck>();
+            
+            Deck Jugador1 = new Deck();
+            Deck Jugador2 = new Deck();
+            this.decks = new List<Deck>() {Jugador1,Jugador2};
             this.captains = new List<Card>();
         }
         
@@ -104,11 +107,11 @@ namespace Laboratorio_3_OOP_201902
             int cont = 0;
             string fileLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + @"\Files\Decks.txt";
             StreamReader reader = new StreamReader(fileLocation);
+            List<Card> cards = new List<Card>();
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
-                string[] position = line.Split();
-                List<Card> cards = new List<Card>();
+                string[] position = line.Split(",");
                 if (position[0]!="END")
                 {
                     if (position[0]!="START")
@@ -127,8 +130,8 @@ namespace Laboratorio_3_OOP_201902
                 }
                 else
                 {
-                    cont++;
-                    Decks[cont].Cards = new List<Card>(cards);
+                    Decks[cont].Cards= new List<Card>(cards);
+                    cont=cont+1;
                     cards.Clear();
                 }
                 
@@ -142,10 +145,19 @@ namespace Laboratorio_3_OOP_201902
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
-                string[] position = line.Split();
+                string[] position = line.Split(",");
                 captains.Add(new SpecialCard(position[1], position[2], position[3]));
             }
             reader.Close();
+        }
+        public void WriteCards() {
+            foreach (Deck deck in Decks)
+            {
+                foreach (Card card in deck.Cards)
+                {
+                    Console.WriteLine($"{card.Name},{card.Type}");
+                }
+            }
         }
     }
 }
